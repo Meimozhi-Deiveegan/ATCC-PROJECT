@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Detection Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+            border-left: 4px solid #667eea;
+        }
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .chart-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .chart {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Traffic Detection Dashboard</h1>
+            <p>Real-time Traffic Analysis and Monitoring</p>
+            <p>Generated on: 2025-10-13 12:55:59</p>
+        </div>
+        
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-number">1710</div>
+                <div>Total Detections</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">19</div>
+                <div>Vehicle Types</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">7</div>
+                <div>Source Files</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">1</div>
+                <div>Days Analyzed</div>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <div class="chart">
+                <h3>Vehicle Type Distribution</h3>
+                <canvas id="vehicleChart"></canvas>
+            </div>
+            <div class="chart">
+                <h3>Hourly Traffic Pattern</h3>
+                <canvas id="hourlyChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="chart">
+            <h3>Recent Detections</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Vehicle Type</th>
+                        <th>Confidence</th>
+                        <th>Source File</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Car</td>
+                        <td>0.40</td>
+                        <td>nan</td>
+                        <td>2025-10-11 14:17:07</td>
+                    </tr>
+                    <tr>
+                        <td>Car</td>
+                        <td>0.38</td>
+                        <td>nan</td>
+                        <td>2025-10-11 14:17:07</td>
+                    </tr>
+                    <tr>
+                        <td>Mini Truck</td>
+                        <td>0.34</td>
+                        <td>nan</td>
+                        <td>2025-10-11 14:17:08</td>
+                    </tr>
+                    <tr>
+                        <td>Mini Truck</td>
+                        <td>0.32</td>
+                        <td>nan</td>
+                        <td>2025-10-11 14:17:08</td>
+                    </tr>
+                    <tr>
+                        <td>Car</td>
+                        <td>0.37</td>
+                        <td>nan</td>
+                        <td>2025-10-11 14:17:08</td>
+                    </tr>
+                    <tr>
+                        <td>Van</td>
+                        <td>0.53</td>
+                        <td>nan</td>
+                        <td>2025-10-11 14:17:11</td>
+                    </tr>
+                    <tr>
+                        <td>Bus</td>
+                        <td>0.42</td>
+                        <td>nan</td>
+                        <td>2025-10-11 14:17:11</td>
+                    </tr>
+                    <tr>
+                        <td>Car</td>
+                        <td>0.50</td>
+                        <td>nan</td>
+                        <td>2025-10-11 14:17:12</td>
+                    </tr>
+                    <tr>
+                        <td>Mini Truck</td>
+                        <td>0.36</td>
+                        <td>nan</td>
+                        <td>2025-10-11 14:17:13</td>
+                    </tr>
+                    <tr>
+                        <td>Bus</td>
+                        <td>0.31</td>
+                        <td>nan</td>
+                        <td>2025-10-11 14:17:14</td>
+                    </tr>
+                    <tr>
+                        <td>Car</td>
+                        <td>0.32</td>
+                        <td>nan</td>
+                        <td>2025-10-11 14:17:18</td>
+                    </tr>
+                    <tr>
+                        <td>Bus</td>
+                        <td>0.34</td>
+                        <td>nan</td>
+                        <td>2025-10-11 14:17:19</td>
+                    </tr>
+                    <tr>
+                        <td>Bus</td>
+                        <td>0.32</td>
+                        <td>nan</td>
+                        <td>2025-10-11 14:17:36</td>
+                    </tr>
+                    <tr>
+                        <td>Car</td>
+                        <td>0.59</td>
+                        <td>nan</td>
+                        <td>2025-10-11 14:17:39</td>
+                    </tr>
+                    <tr>
+                        <td>LCV</td>
+                        <td>0.30</td>
+                        <td>nan</td>
+                        <td>2025-10-11 14:17:42</td>
+                    </tr>
+                    <tr>
+                        <td>Car</td>
+                        <td>0.32</td>
+                        <td>nan</td>
+                        <td>2025-10-11 14:17:42</td>
+                    </tr>
+                    <tr>
+                        <td>Auto Rickshaw</td>
+                        <td>0.37</td>
+                        <td>nan</td>
+                        <td>2025-10-11 14:17:49</td>
+                    </tr>
+                    <tr>
+                        <td>Car</td>
+                        <td>0.30</td>
+                        <td>nan</td>
+                        <td>2025-10-11 14:18:02</td>
+                    </tr>
+                    <tr>
+                        <td>Bus</td>
+                        <td>0.39</td>
+                        <td>nan</td>
+                        <td>2025-10-11 14:18:03</td>
+                    </tr>
+                    <tr>
+                        <td>Bus</td>
+                        <td>0.35</td>
+                        <td>nan</td>
+                        <td>2025-10-11 14:18:08</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Vehicle Type Chart
+        const vehicleCtx = document.getElementById('vehicleChart').getContext('2d');
+        const vehicleChart = new Chart(vehicleCtx, {
+            type: 'pie',
+            data: {
+                labels: ["Car", "2-Wheeler", "3-Wheeler (Auto Rickshaw)", "Mini Truck", "Truck (2-Axle)", "Bus (2-Axle)", "Omni Van", "Bus", "Car (3-Axle)", "Motor Bike", "Car (2-Axle)", "LCV", "Truck (3-Axle)", "Truck (Multi-Axle)", "Jeep", "Unknown", "Auto Rickshaw", "Van", "Bus (3-Axle)"],
+                datasets: [{
+                    data: [441, 255, 154, 131, 127, 112, 76, 61, 54, 51, 44, 44, 41, 34, 27, 23, 17, 10, 8],
+                    backgroundColor: [
+                        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
+                        '#9966FF', '#FF9F40', '#FF6384', '#C9CBCF'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Vehicle Distribution'
+                    }
+                }
+            }
+        });
+
+        // Hourly Traffic Chart
+        const hourlyCtx = document.getElementById('hourlyChart').getContext('2d');
+        const hourlyChart = new Chart(hourlyCtx, {
+            type: 'line',
+            data: {
+                labels: [14, 15, 18, 19],
+                datasets: [{
+                    label: 'Detections per Hour',
+                    data: [53, 175, 567, 915],
+                    borderColor: '#36A2EB',
+                    backgroundColor: 'rgba(54, 162, 235, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Hourly Traffic Pattern'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Detections'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Hour of Day'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
